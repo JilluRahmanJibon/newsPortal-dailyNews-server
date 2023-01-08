@@ -6,7 +6,7 @@ require("dotenv").config();
 const app = express();
 const port = process.env.PORT || 5000;
 
-// author : Ala Uddin and Jillu Rahman Jibon 
+// author : Ala Uddin and Jillu Rahman Jibon
 
 app.use(cors());
 app.use(express.json());
@@ -45,9 +45,9 @@ function verifyJWT(req, res, next) {
 async function run() {
   const usersCollections = client.db("newsPortal").collection("users");
   // newscollections
-    const newsCollections = client.db("newsPortal").collection("news");
-    
-    // alauddin vaiya and jibon we are team members
+  const newsCollections = client.db("newsPortal").collection("news");
+
+  // alauddin vaiya and jibon we are team members
 
   // verify admin
   const verifyAdmin = async (req, res, next) => {
