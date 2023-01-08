@@ -12,11 +12,11 @@ app.use(express.json())
 
 
 app.get('/', (req, res) => {
-    res.send('newsPortal-dailyNewn-server is running')
+    res.send('News portal daily news server is ready for use')
 })
 
 app.listen(port, () => {
-    console.log('server is running on ',port);
+    console.log('server is running on',port);
 })
 
 
@@ -48,7 +48,7 @@ function verifyJWT(req, res, next) {
 
 async function run() {
     const usersCollections= client.db('newsPortal').collection('users')
-
+    const newsDataCollection= client.db('newsPortal').collection('news') 
 
 
     // verify admin 
