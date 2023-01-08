@@ -4,7 +4,7 @@ const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const app = express();
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 8000;
 
 // author : Ala Uddin and Jillu Rahman Jibon
 
@@ -12,7 +12,7 @@ app.use(cors());
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.send("newsPortal-dailyNewn-server is running");
+  res.send("News portal daily news server is ready for use");
 });
 
 app.listen(port, () => {
@@ -20,7 +20,7 @@ app.listen(port, () => {
 });
 
 const uri = `mongodb+srv://${process.env.USER}:${process.env.PASSWORD}@cluster0.jf2skzr.mongodb.net/?retryWrites=true&w=majority`;
-
+console.log(uri);
 const client = new MongoClient(uri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -60,6 +60,7 @@ async function run() {
     }
     next();
   };
+
   // verify publisher
   const verifyPublisher = async (req, res, next) => {
     const decodedEmail = req.decoded.email;
@@ -71,7 +72,11 @@ async function run() {
     }
     next();
   };
+
+  app.get("/news", async (req, res) => {
+    const news = await newsCollections.find({}).toArray();
+    console.log(news);
+    res.send(news);
+  });
 }
-run().catch((err) => {
-  console.log(err);
-});
+run().catch();
