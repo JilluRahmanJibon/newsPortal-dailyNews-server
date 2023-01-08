@@ -42,6 +42,8 @@ function verifyJWT(req, res, next) {
 
 async function run() {
   const usersCollections = client.db("newsPortal").collection("users");
+  // newscollections
+  const newsCollections = client.db("newsPortal").collection("news");
 
   // verify admin
   const verifyAdmin = async (req, res, next) => {
