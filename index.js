@@ -78,5 +78,43 @@ async function run() {
     console.log(news);
     res.send(news);
   });
+  // get news by id
+  app.get("/news/:id", async (req, res) => {
+    const id = req.params.id;
+    const query = { _id: ObjectId(id) };
+    const news = await newsCollections.findOne(query);
+    res.send(news);
+  });
+
+  // get news by category
+  app.get("/news/category/:category", async (req, res) => {
+    const category = req.params.category;
+    const query = { category: category };
+    const news = await newsCollections.find(query).toArray();
+    res.send(news);
+  });
+  // post a news
+  app.post("/news", verifyJWT, verifyPublisher, async (req, res) => {
+    const news = req.body;
+    const result = await newsCollections.insertOne(news);
+    res.send(result);
+  });
+  // delete a news
+  app.delete("/news/:id", verifyJWT, verifyAdmin, async (req, res) => {
+    const id = req.params.id;
+    const query = { _id: ObjectId(id) };
+    const result = await newsCollections.deleteOne(query);
+    res.send(result);
+  });
+  // update a news
+  app.patch("/news/:id", verifyJWT, verifyAdmin, async (req, res) => {
+    const id = req.params.id;
+    const query = { _id: ObjectId(id) };
+    const updateNews = req.body;
+    const result = await newsCollections.updateOne(query, {
+      $set: updateNews,
+    });
+    res.send(result);
+  });
 }
 run().catch();
