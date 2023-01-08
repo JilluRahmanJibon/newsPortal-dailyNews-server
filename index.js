@@ -73,30 +73,31 @@ async function run() {
     next();
   };
 
-  // user post 
-  app.post('/users', async (req, res) => {
-    const user = req.body
-    const query = { email: user.email }
-    const alreadyUser = await usersCollections.findOne(query)
+  // user post
+  app.post("/users", async (req, res) => {
+    const user = req.body;
+    const query = { email: user.email };
+    const alreadyUser = await usersCollections.findOne(query);
     if (alreadyUser) {
-      return res.send({ acknowledged: true })
+      return res.send({ acknowledged: true });
     }
-    const result = await usersCollections.insertOne(user)
-    res.send(result)
+    const result = await usersCollections.insertOne(user);
+    res.send(result);
+  });
 
-  })
-
-  // get jwt 
-  app.get('/jwt', async (req, res) => {
+  // get jwt
+  app.get("/jwt", async (req, res) => {
     const email = req.query.email;
     console.log(email);
     const query = { email: email };
     const user = await usersCollections.findOne(query);
     if (user) {
-      const token = jwt.sign({ email }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '5d' })
+      const token = jwt.sign({ email }, process.env.ACCESS_TOKEN_SECRET, {
+        expiresIn: "5d",
+      });
       return res.send({ accessToken: token });
     }
-    res.status(403).send({ accessToken: '' })
+    res.status(403).send({ accessToken: "" });
   });
 
   app.get("/news", async (req, res) => {
