@@ -84,7 +84,7 @@ async function run() {
     const result = await usersCollections.insertOne(user);
     res.send(result);
   });
-
+  // app.get("/users", as)
   // get jwt
   app.get("/jwt", async (req, res) => {
     const email = req.query.email;
